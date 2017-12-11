@@ -48,7 +48,7 @@ $( function () {
         setTimeout( getInfo, 2000 )
     }
 
-    let allRows = [ [ 0, 0, 0 ] ]
+    let allRows = []
     let moreRows = []
 
     function run() {
@@ -61,7 +61,13 @@ $( function () {
         sortLowestToHighest( sellOrders )
 
         count += 2
-        moreRows = [ count, Number( buyOrders[ 0 ].price ), Number( sellOrders[ 0 ].price ) ]
+
+        if ( allRows.length === 0 ) {
+            allRows.push( [ 0, Number( buyOrders[ 0 ].price * 0.9995 ), Number( sellOrders[ 0 ].price * 0.9995 ) ] )
+        } else {
+            moreRows = [ count, Number( buyOrders[ 0 ].price ), Number( sellOrders[ 0 ].price ) ]
+        }
+
 
         google.charts.load( 'current', {
             'packages': [ 'line' ]
@@ -71,9 +77,7 @@ $( function () {
     }
 
     function drawChart() {
-        console.log( allRows );
-        allRows.push( moreRows )
-
+        if ( moreRows.length !== 0 ) allRows.push( moreRows )
 
         var data = new google.visualization.DataTable();
         data.addColumn( 'number', 'Time in seconds' );
