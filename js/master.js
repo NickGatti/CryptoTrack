@@ -102,7 +102,6 @@ $( function () {
 
     function landingPage() {
         //$( '.page-main' ).empty()
-
     }
 
     function dataPage() {
@@ -112,9 +111,10 @@ $( function () {
         let mainFoot = '</div></div></div></div>'
         let fullHTML = mainHead + settingComponents + mainFoot
         $( '.page-main' ).append( fullHTML )
-        // getInfo()
+        getInfo()
     }
 
-    landingPage()
+    $( '#getStarted' ).click( dataPage )
+    //landingPage()
     // dataPage()
 } );
