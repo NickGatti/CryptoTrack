@@ -100,5 +100,21 @@ $( function () {
         chart.draw( data, google.charts.Line.convertOptions( options ) );
     }
 
-    getInfo()
+    function landingPage() {
+        $( '.page-main' ).empty()
+
+    }
+
+    function dataPage() {
+        $( '.page-main' ).empty()
+        let mainHead = '<div class="container"><div class="row"><div class="col s10"><div id="chart_div" class="card"></div></div><div class="col s2"><div class="row">'
+        let settingComponents = '<div class="col s12 card">Setting</div>'
+        let mainFoot = '</div></div></div></div>'
+        let fullHTML = mainHead + settingComponents + mainFoot
+        $( '.page-main' ).append( fullHTML )
+        // getInfo()
+    }
+
+    landingPage()
+    // dataPage()
 } );

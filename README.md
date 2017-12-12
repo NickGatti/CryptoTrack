@@ -6,6 +6,6 @@
 
 ### Local Storage
 
-### Quanitity
+### Quantity
 
 ### Price
