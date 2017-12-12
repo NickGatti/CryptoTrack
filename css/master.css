@@ -20,3 +20,7 @@ body {
 main {
     flex: 1 0 auto;
 }
+
+#getStarted {
+    margin-top: 4rem;
+}
