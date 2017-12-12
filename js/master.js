@@ -101,7 +101,7 @@ $( function () {
     }
 
     function landingPage() {
-        $( '.page-main' ).empty()
+        //$( '.page-main' ).empty()
 
     }
 

@@ -4,7 +4,11 @@
 }
 
 .page-main {
-    padding: 2em;
+    margin-top: 0.14rem;
+}
+
+.page-main .card {
+    padding: 1.25rem;
 }
 
 body {
