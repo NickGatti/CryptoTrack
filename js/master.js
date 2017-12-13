@@ -1,3 +1,8 @@
+$( document ).ready( function () {
+    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+    $( '.modal' ).modal();
+    $( '#modal1' ).modal( 'close' );
+} );
 $( function () {
 
     let count = 0
@@ -149,6 +154,35 @@ $( function () {
             e.stopPropagation()
             setTimeout( dataPage, 500 )
         } )
+    }
+
+    function storageAvailable( type ) {
+        try {
+            var storage = window[ type ],
+                x = '__storage_test__';
+            storage.setItem( x, x );
+            storage.removeItem( x );
+            return true;
+        } catch ( e ) {
+            return e instanceof DOMException && (
+                    // everything except Firefox
+                    e.code === 22 ||
+                    // Firefox
+                    e.code === 1014 ||
+                    // test name field too, because code might not be present
+                    // everything except Firefox
+                    e.name === 'QuotaExceededError' ||
+                    // Firefox
+                    e.name === 'NS_ERROR_DOM_QUOTA_REACHED' ) &&
+                // acknowledge QuotaExceededError only if there's something already stored
+                storage.length !== 0;
+        }
+    }
+
+    if ( storageAvailable( 'localStorage' ) ) {
+        console.log( 'YES' );
+    } else {
+        $( '#localStorageModal' ).modal( 'open' );
     }
 
     init()
