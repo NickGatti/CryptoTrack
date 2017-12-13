@@ -207,6 +207,13 @@ $( function () {
         allRows = data
     }
 
+    function clearStorage() {
+        localStorage.removeItem( 'marketData' )
+        data = null
+        count = 0
+        allRows = []
+        moreRows = []
+    }
 
     if ( storageAvailable( 'localStorage' ) ) {
         if ( localStorage.getItem( "marketData" ) ) {
@@ -214,11 +221,13 @@ $( function () {
         } else {
             localStorage.setItem( 'marketData', allRows );
         }
+        $( '#clearStorage' ).css( 'visibility', 'visible' )
+        $( '#clearStorage' ).click( clearStorage )
         storageAva = true
     } else {
         $( '#localStorageModal' ).modal( 'open' );
+        $( '#clearStorage' ).css( 'visibility', 'hidden' )
     }
 
-    // localStorage.removeItem( 'marketData' )
     init()
 } );
