@@ -4,7 +4,7 @@
 
 ### BTC / ETH / ETC... - Check
 
-### Local Storage
+### Local Storage - Check - Load at points
 
 ### Quantity
 
@@ -14,4 +14,4 @@
 
 ### Fix cant read property price of undefined - Check
 
-### Zoom
+### Zoom - Next

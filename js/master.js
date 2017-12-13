@@ -212,7 +212,6 @@ $( function () {
             } )
 
             count = allRows[ allRows.length - 1 ][ 0 ]
-            console.log( allRows );
 
         } else {
             localStorage.setItem( 'marketData', allRows );
