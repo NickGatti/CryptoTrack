@@ -5,6 +5,7 @@ $( document ).ready( function () {
 } );
 $( function () {
 
+    let storageAva = false
     let count = 0
     let data;
     let coin = 'ETH'
@@ -79,6 +80,7 @@ $( function () {
             moreRows = [ count, Number( buyOrders[ 0 ].price ), Number( sellOrders[ 0 ].price ) ]
         }
 
+        if ( storageAva ) localStorage.setItem( 'marketData', allRows );
 
         google.charts.load( 'current', {
             'packages': [ 'line' ]
@@ -179,8 +181,43 @@ $( function () {
         }
     }
 
+
     if ( storageAvailable( 'localStorage' ) ) {
-        console.log( 'YES' );
+        let output = []
+        let accu = []
+        if ( localStorage.getItem( "marketData" ) ) {
+            allRows = localStorage.getItem( "marketData" )
+
+            allRows = allRows.split( ',' )
+
+            allRows = allRows.splice( 1, allRows.length )
+
+            for ( let i = 0; i < allRows.length; i++ ) {
+                if ( i % 3 === 0 ) {
+                    output.push( accu )
+                    accu = []
+                }
+                if ( Number( allRows[ i ] ) ) {
+                    accu.push( Number( allRows[ i ] ) )
+                } else {
+                    accu.push( 0 )
+                }
+            }
+            allRows = output
+
+            allRows = allRows.splice( 1, allRows.length )
+
+            allRows.sort( ( a, b ) => {
+                return a[ 0 ] - b[ 0 ]
+            } )
+
+            count = allRows[ allRows.length - 1 ][ 0 ]
+            console.log( allRows );
+
+        } else {
+            localStorage.setItem( 'marketData', allRows );
+        }
+        storageAva = true
     } else {
         $( '#localStorageModal' ).modal( 'open' );
     }
