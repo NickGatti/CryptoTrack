@@ -1,14 +1,24 @@
 $( document ).ready( function () {
-    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
     $( '.modal' ).modal();
     $( '#modal1' ).modal( 'close' );
 } );
 $( function () {
 
     let storageAva = false
-    let count = 0
-    let data;
+
+    let chartTimeCount = 0
+    let dataInXHRRes;
+
     let coin = 'ETH'
+
+    let chartData = {
+        'ETH': [],
+        'BTC': []
+    }
+
+    let allRows = chartData[ coin ]
+    let moreRows = []
+
     let pullBuysOut = ( passedOrderArray ) => {
         return passedOrderArray.filter( ( ele ) => {
             return ele.side === "buy"
@@ -49,17 +59,14 @@ $( function () {
             console.log( 'Error in API request: ' + this );
             run()
         } else {
-            data = this
+            dataInXHRRes = this
             run()
         }
         setTimeout( getInfo, 2000 )
     }
 
-    let allRows = []
-    let moreRows = []
-
     function run() {
-        let orders = JSON.parse( data.responseText )
+        let orders = JSON.parse( dataInXHRRes.responseText )
 
         let buyOrders = pullBuysOut( orders )
         sortHighestToLowest( buyOrders )
@@ -75,11 +82,11 @@ $( function () {
         if ( allRows.length === 0 ) {
             allRows.push( [ 0, Number( buyOrders[ 0 ].price * 0.9995 ), Number( sellOrders[ 0 ].price * 0.9995 ) ] )
         } else {
-            count += 2
-            moreRows = [ count, Number( buyOrders[ 0 ].price ), Number( sellOrders[ 0 ].price ) ]
+            chartTimeCount += 2
+            moreRows = [ chartTimeCount, Number( buyOrders[ 0 ].price ), Number( sellOrders[ 0 ].price ) ]
         }
 
-        if ( storageAva ) localStorage.setItem( 'marketData', allRows );
+        if ( storageAva ) localStorage.setItem( coin, allRows );
 
         google.charts.load( 'current', {
             'packages': [ 'line' ]
@@ -124,7 +131,9 @@ $( function () {
     function flipCoins() {
         coin = $( 'select' ).val()
         baseUrl = `https://api.gdax.com//products/${coin}-USD/trades`
-        data = null;
+        data = null
+        moreRows = []
+        parseLocalStorage( coin )
     }
 
     function initData() {
@@ -184,42 +193,44 @@ $( function () {
         let output = []
         let accu = []
 
-        let data = localStorage.getItem( inputArray )
+        let builder = localStorage.getItem( inputArray )
 
-        data = data.split( ',' )
+        if ( !builder ) return
 
-        for ( let i = 0; i < data.length; i++ ) {
+        builder = builder.split( ',' )
+
+        for ( let i = 0; i < builder.length; i++ ) {
             if ( i % 3 === 0 && i >= 3 ) {
                 output.push( accu )
                 accu = []
             }
 
-            accu.push( Number( data[ i ] ) )
+            accu.push( Number( builder[ i ] ) )
         }
 
-        data = output
+        builder = output
 
-        data.sort( ( a, b ) => {
+        builder.sort( ( a, b ) => {
             return a[ 0 ] - b[ 0 ]
         } )
 
-        count = data[ data.length - 1 ][ 0 ]
-        allRows = data
+        chartTimeCount = builder[ builder.length - 1 ][ 0 ]
+        allRows = builder
     }
 
     function clearStorage() {
-        localStorage.removeItem( 'marketData' )
+        localStorage.removeItem( coin )
         data = null
-        count = 0
+        chartTimeCount = 0
         allRows = []
         moreRows = []
     }
 
     if ( storageAvailable( 'localStorage' ) ) {
-        if ( localStorage.getItem( "marketData" ) ) {
-            parseLocalStorage( "marketData" )
+        if ( localStorage.getItem( coin ) ) {
+            parseLocalStorage( coin )
         } else {
-            localStorage.setItem( 'marketData', allRows );
+            localStorage.setItem( coin, allRows );
         }
         $( '#clearStorage' ).css( 'visibility', 'visible' )
         $( '#clearStorage' ).click( clearStorage )

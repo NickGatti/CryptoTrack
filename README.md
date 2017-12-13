@@ -4,7 +4,7 @@
 
 ### BTC / ETH / ETC... - Check
 
-### Local Storage - Check - Add button / Fix Eth or Btc
+### Local Storage - Fix Eth or Btc - Check
 
 ### Quantity
 
