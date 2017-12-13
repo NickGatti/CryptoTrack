@@ -10,8 +10,8 @@
 
 ### Price
 
-### Fix presistance bug
+### Fix presistance bug (data page to home page)
 
-### Fix cant read property price of undefined
+### Fix cant read property price of undefined - Check
 
 ### Zoom
