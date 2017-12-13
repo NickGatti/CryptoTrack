@@ -114,9 +114,11 @@ $( function () {
         $( '#backHome' ).css( 'visibility', 'visible' )
         let mainHead = '<div class="container"><div class="row"><div class="col s10"><div id="chart_div" class="card"></div></div><div class="col s2"><div class="row">'
         let settingComponents = '<div class="col s12 card">Setting</div>'
+        settingComponents = '<div class="input-field col s12"><option value="" disabled selected>Choose your option</option><select><option value="1">ETH</option><option value="2">BTC</option></select><label>Currency</label></div>'
         let mainFoot = '</div></div></div></div>'
         let fullHTML = mainHead + settingComponents + mainFoot
         $( '.page-main' ).append( fullHTML )
+        $( 'select' ).material_select();
         getInfo()
     }
 
