@@ -67,8 +67,6 @@ $( function () {
         let sellOrders = pullSellsOut( orders )
         sortLowestToHighest( sellOrders )
 
-        count += 2
-
         if ( !buyOrders[ 0 ] || !sellOrders[ 0 ] ) {
             console.log( 'Error in response', sellOrders[ 0 ], buyOrders[ 0 ] );
             return
@@ -77,6 +75,7 @@ $( function () {
         if ( allRows.length === 0 ) {
             allRows.push( [ 0, Number( buyOrders[ 0 ].price * 0.9995 ), Number( sellOrders[ 0 ].price * 0.9995 ) ] )
         } else {
+            count += 2
             moreRows = [ count, Number( buyOrders[ 0 ].price ), Number( sellOrders[ 0 ].price ) ]
         }
 
@@ -181,38 +180,37 @@ $( function () {
         }
     }
 
-
-    if ( storageAvailable( 'localStorage' ) ) {
+    function parseLocalStorage( inputArray ) {
         let output = []
         let accu = []
-        if ( localStorage.getItem( "marketData" ) ) {
-            allRows = localStorage.getItem( "marketData" )
 
-            allRows = allRows.split( ',' )
+        let data = localStorage.getItem( inputArray )
 
-            allRows = allRows.splice( 1, allRows.length )
+        data = data.split( ',' )
 
-            for ( let i = 0; i < allRows.length; i++ ) {
-                if ( i % 3 === 0 ) {
-                    output.push( accu )
-                    accu = []
-                }
-                if ( Number( allRows[ i ] ) ) {
-                    accu.push( Number( allRows[ i ] ) )
-                } else {
-                    accu.push( 0 )
-                }
+        for ( let i = 0; i < data.length; i++ ) {
+            if ( i % 3 === 0 && i >= 3 ) {
+                output.push( accu )
+                accu = []
             }
-            allRows = output
 
-            allRows = allRows.splice( 1, allRows.length )
+            accu.push( Number( data[ i ] ) )
+        }
 
-            allRows.sort( ( a, b ) => {
-                return a[ 0 ] - b[ 0 ]
-            } )
+        data = output
 
-            count = allRows[ allRows.length - 1 ][ 0 ]
+        data.sort( ( a, b ) => {
+            return a[ 0 ] - b[ 0 ]
+        } )
 
+        count = data[ data.length - 1 ][ 0 ]
+        allRows = data
+    }
+
+
+    if ( storageAvailable( 'localStorage' ) ) {
+        if ( localStorage.getItem( "marketData" ) ) {
+            parseLocalStorage( "marketData" )
         } else {
             localStorage.setItem( 'marketData', allRows );
         }
@@ -221,5 +219,6 @@ $( function () {
         $( '#localStorageModal' ).modal( 'open' );
     }
 
+    // localStorage.removeItem( 'marketData' )
     init()
 } );
