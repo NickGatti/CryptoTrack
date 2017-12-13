@@ -1,8 +1,8 @@
 # CryptoTrack
 
-### Landing Page
+### Landing Page - Check
 
-### BTC / ETH / ETC...
+### BTC / ETH / ETC... - Check
 
 ### Local Storage
 
@@ -11,3 +11,7 @@
 ### Price
 
 ### Fix presistance bug
+
+### Fix cant read property price of undefined
+
+### Zoom

@@ -2,6 +2,7 @@ $( function () {
 
     let count = 0
     let data;
+    let coin = 'ETH'
     let pullBuysOut = ( passedOrderArray ) => {
         return passedOrderArray.filter( ( ele ) => {
             return ele.side === "buy"
@@ -90,7 +91,7 @@ $( function () {
 
         var options = {
             chart: {
-                title: 'USD Price of ETH Over Time',
+                title: `USD Price of ${coin} Over Time`,
                 subtitle: 'updated every two seconds'
             }
         };
@@ -109,14 +110,27 @@ $( function () {
         $( '.page-main' ).append( fullHTML )
     }
 
+    function flipCoins() {
+        coin = $( 'select' ).val()
+        baseUrl = `https://api.gdax.com//products/${coin}-USD/trades`
+        data = null;
+    }
+
+    function initData() {
+        $( 'select' ).on( 'change', flipCoins )
+    }
+
     function dataPage() {
         $( '.page-main' ).empty()
         $( '#backHome' ).css( 'visibility', 'visible' )
         let mainHead = '<div class="container"><div class="row"><div class="col s10"><div id="chart_div" class="card"></div></div><div class="col s2"><div class="row">'
         let settingComponents = '<div class="col s12 card">Setting</div>'
+        settingComponents = '<div class="card col s12"><label>Currency</label><div class="input-field"><select><option value="ETH">ETH</option><option value="BTC">BTC</option></select></div></div>'
         let mainFoot = '</div></div></div></div>'
         let fullHTML = mainHead + settingComponents + mainFoot
         $( '.page-main' ).append( fullHTML )
+        $( 'select' ).material_select();
+        initData()
         getInfo()
     }
 
