@@ -39,9 +39,9 @@ $( function () {
     }
 
     function responseRecieved() {
-        if ( this.status < 200 && this.status >= 400 && this.readyState !== 1 ) {
+        if ( this.status < 200 && this.status >= 400 && this.readyState !== 1 && this.responseText ) {
             console.log( 'Error in API request: ' + this );
-            return
+            run()
         } else {
             data = this
             run()
@@ -62,6 +62,11 @@ $( function () {
         sortLowestToHighest( sellOrders )
 
         count += 2
+
+        if ( !buyOrders[ 0 ] || !sellOrders[ 0 ] ) {
+            console.log( 'Error in response', sellOrders[ 0 ], buyOrders[ 0 ] );
+            return
+        }
 
         if ( allRows.length === 0 ) {
             allRows.push( [ 0, Number( buyOrders[ 0 ].price * 0.9995 ), Number( sellOrders[ 0 ].price * 0.9995 ) ] )
@@ -124,7 +129,7 @@ $( function () {
         $( '.page-main' ).empty()
         $( '#backHome' ).css( 'visibility', 'visible' )
         let mainHead = '<div class="container"><div class="row"><div class="col s10"><div id="chart_div" class="card"></div></div><div class="col s2"><div class="row">'
-        let settingComponents = '<div class="col s12 card">Setting</div>'
+        let settingComponents = ''
         settingComponents = '<div class="card col s12"><label>Currency</label><div class="input-field"><select><option value="ETH">ETH</option><option value="BTC">BTC</option></select></div></div>'
         let mainFoot = '</div></div></div></div>'
         let fullHTML = mainHead + settingComponents + mainFoot
