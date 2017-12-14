@@ -14,6 +14,6 @@
 
 ### Fix cant read property price of undefined - Check
 
-### Zoom - Next - Crazy Hard too much time
+### Zoom - Next - Crazy Hard too much time - Only minimal support
 
 ### Make readme.md pretty
