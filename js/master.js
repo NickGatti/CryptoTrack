@@ -8,6 +8,10 @@ $( function () {
         state: 'landingPage'
     }
 
+    let globlChart = {
+        state: 'line'
+    }
+
     let storageAva = false
 
     let sizeSorter = null
@@ -59,6 +63,12 @@ $( function () {
         } )
     }
 
+    let reduceToDualNumber = ( passedOrderArray ) => {
+        return passedOrderArray.map( ( ele ) => {
+            return [ ele[ 1 ], ele[ 2 ] ]
+        } )
+    }
+
     var baseUrl = 'https://api.gdax.com//products/ETH-USD/trades';
 
     var xhr = new XMLHttpRequest()
@@ -106,15 +116,20 @@ $( function () {
 
         if ( storageAva ) localStorage.setItem( coin, allRows );
 
-        if ( page.state === 'dataPage' ) {
+        if ( page.state === 'dataPage' && globlChart.state === 'line' ) {
             google.charts.load( 'current', {
                 'packages': [ 'line' ]
             } );
-            google.charts.setOnLoadCallback( drawChart );
+            google.charts.setOnLoadCallback( drawLineChart );
+        } else if ( page.state === 'dataPage' && globlChart.state === 'scatter' ) {
+            google.charts.load( 'current', {
+                'packages': [ 'scatter' ]
+            } );
+            google.charts.setOnLoadCallback( drawScatterChart );
         }
     }
 
-    function drawChart() {
+    function drawLineChart() {
         if ( moreRows.length !== 0 ) allRows.push( moreRows )
 
         var data = new google.visualization.DataTable();
@@ -123,8 +138,6 @@ $( function () {
         data.addColumn( 'number', 'Sells' );
 
         data.addRows( allRows );
-
-
 
         var options = {
             chart: {
@@ -136,6 +149,35 @@ $( function () {
         var chart = new google.charts.Line( document.getElementById( 'chart_div' ) );
 
         chart.draw( data, google.charts.Line.convertOptions( options ) );
+    }
+
+    function drawScatterChart() {
+        if ( moreRows.length !== 0 ) allRows.push( moreRows )
+
+        var data = new google.visualization.DataTable();
+        data.addColumn( 'number', 'Buy Price' );
+        data.addColumn( 'number', 'Sell Price' );
+
+        let scatterData = reduceToDualNumber( allRows )
+
+        data.addRows( scatterData );
+
+        var options = {
+            chart: {
+                title: 'Buy and Sell Prices',
+                subtitle: 'updated every 2 seconds'
+            },
+            hAxis: {
+                title: 'Buys'
+            },
+            vAxis: {
+                title: 'Sells'
+            }
+        };
+
+        var chart = new google.charts.Scatter( document.getElementById( 'chart_div' ) );
+
+        chart.draw( data, google.charts.Scatter.convertOptions( options ) );
     }
 
     function landingPage() {
@@ -150,15 +192,19 @@ $( function () {
     }
 
     function flipCoins() {
-        coin = $( 'select' ).val()
+        coin = $( '#coinSelect' ).val()
         baseUrl = `https://api.gdax.com//products/${coin}-USD/trades`
         data = null
         moreRows = []
         parseLocalStorage( coin )
     }
 
+    function flipChart() {
+        globlChart.state = $( '#chartSelect' ).val()
+    }
+
     function initData() {
-        $( 'select' ).on( 'change', flipCoins )
+        $( '#coinSelect' ).on( 'change', flipCoins )
         $( '#submitSize' ).click( () => {
             if ( $( '#sortSize' ).val() === '' ) {
                 sizeSorter = null
@@ -167,7 +213,7 @@ $( function () {
             if ( !numSorter ) sizeSorter = Number( $( '#sortSize' ).val() )
 
         } )
-        // $( '.submitPrice' ).click()
+        $( '#chartSelect' ).on( 'change', flipChart )
     }
 
     function dataPage() {
@@ -175,9 +221,9 @@ $( function () {
         $( '#backHome' ).css( 'visibility', 'visible' )
         let mainHead = '<div class="container"><div class="row"><div class="col s10"><div id="chart_div" class="card"></div></div><div class="col s2"><div class="row">'
         let settingComponents = ''
-        settingComponents = '<div class="card col s12"><label>Currency</label><div class="input-field"><select><option value="ETH">ETH</option><option value="BTC">BTC</option></select></div></div>'
-        // settingComponents += '<div class="card col s12"><label>Price</label><div class="input-field"><input placeholder="" id="sortPrice" type="text" class="validate"></div><a id="submitPrice" class="waves-effect waves-light btn">Go</a></div>'
-        settingComponents += '<div class="card col s12"><label>Size</label><div class="input-field"><input placeholder="" id="sortSize" type="text" class="validate"></div><a id="submitSize" class="waves-effect waves-light btn">Go</a></div>'
+        settingComponents = '<div class="card col s12"><label>Currency</label><div class="input-field"><select id="coinSelect"><option value="ETH">ETH</option><option value="BTC">BTC</option></select></div></div>'
+        settingComponents += '<div class="card col s12"><label>Chart Type</label><div class="input-field"><select id="chartSelect"><option value="line">Line</option><option value="scatter">Scatter</option></select></div></div>'
+        settingComponents += '<div class="card col s12"><label>Order Size</label><div class="input-field"><input placeholder="" id="sortSize" type="text" class="validate"></div><a id="submitSize" class="waves-effect waves-light btn">Go</a></div>'
 
         let mainFoot = '</div></div></div></div>'
         let fullHTML = mainHead + settingComponents + mainFoot
