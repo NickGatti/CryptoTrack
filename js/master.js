@@ -9,6 +9,10 @@ $( function () {
     let chartTimeCount = 0
     let dataInXHRRes;
 
+    let zoomData = {
+        zoom: 0.99995
+    }
+
     let coin = 'ETH'
 
     let chartData = {
@@ -80,7 +84,7 @@ $( function () {
         }
 
         if ( allRows.length === 0 ) {
-            allRows.push( [ 0, Number( buyOrders[ 0 ].price * 0.9995 ), Number( sellOrders[ 0 ].price * 0.9995 ) ] )
+            allRows.push( [ 0, Number( buyOrders[ 0 ].price * zoomData[ 'zoom' ] ), Number( sellOrders[ 0 ].price * zoomData[ 'zoom' ] ) ] )
         } else {
             chartTimeCount += 2
             moreRows = [ chartTimeCount, Number( buyOrders[ 0 ].price ), Number( sellOrders[ 0 ].price ) ]
@@ -92,7 +96,6 @@ $( function () {
             'packages': [ 'line' ]
         } );
         google.charts.setOnLoadCallback( drawChart );
-
     }
 
     function drawChart() {
