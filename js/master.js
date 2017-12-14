@@ -135,6 +135,7 @@ $( function () {
         let mainFoot = '<ul class="collection with-header z-depth-2"><li class="collection-header"><h5 class="blue-grey-text text-darken-2 ">A website that uses cryptocurrency market exchange APIs to allow people the ability to sort, download and view data</h5></li><li class="collection-item"> <span class="blue-grey-text text-darken-0">Who has this problem:</span> <span class="blue-grey-text text-lighten-2">Anyone interested in Data Science or anyone whos interested in cryptocurrency market information for things like investment.</span></li><li class="collection-item"> <span class="blue-grey-text text-darken-0">How will this project solve this problem:</span> <span class="blue-grey-text text-lighten-2">This will do a lot of the legwork for data science when it comes to getting, sorting and viewing data. It will also help people understand how the market is performing.</span></li><li class="collection-item"> <span class="blue-grey-text text-darken-0">What outputs does it produce:</span> <span class="blue-grey-text text-lighten-2">The website will produce data according to user defined settings.</span></li><li class="collection-item"> <span class="blue-grey-text text-darken-0">What APIs will it use:</span> <span class="blue-grey-text text-lighten-2">Coinbases GDAX API, Google Graph API.</span></li><li class="collection-item"> <span class="blue-grey-text text-darken-0">What technologies do you plan to use:</span> <span class="blue-grey-text text-lighten-2">jQuery</span></li></ul></div></div></div>'
         let fullHTML = mainHead + mainFoot
         $( '.page-main' ).append( fullHTML )
+        $( '#clearStorage' ).css( 'visibility', 'hidden' )
         page.state = 'landingPage'
     }
 
@@ -160,6 +161,7 @@ $( function () {
         let fullHTML = mainHead + settingComponents + mainFoot
         $( '.page-main' ).append( fullHTML )
         $( 'select' ).material_select();
+        $( '#clearStorage' ).css( 'visibility', 'visible' )
         initData()
         getInfo()
         page.state = 'dataPage'
