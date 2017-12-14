@@ -10,6 +10,8 @@ $( function () {
 
     let storageAva = false
 
+    let sizeSorter = null
+
     let chartTimeCount = 0
     let dataInXHRRes;
 
@@ -51,6 +53,12 @@ $( function () {
         } )
     }
 
+    let sortBySize = ( passedOrderArray ) => {
+        return passedOrderArray.filter( ( ele ) => {
+            return ele.size > sizeSorter
+        } )
+    }
+
     var baseUrl = 'https://api.gdax.com//products/ETH-USD/trades';
 
     var xhr = new XMLHttpRequest()
@@ -77,9 +85,11 @@ $( function () {
         let orders = JSON.parse( dataInXHRRes.responseText )
 
         let buyOrders = pullBuysOut( orders )
+        if ( sizeSorter ) buyOrders = sortBySize( buyOrders )
         sortHighestToLowest( buyOrders )
 
         let sellOrders = pullSellsOut( orders )
+        if ( sizeSorter ) buyOrders = sortBySize( buyOrders )
         sortLowestToHighest( sellOrders )
 
         if ( !buyOrders[ 0 ] || !sellOrders[ 0 ] ) {
@@ -149,6 +159,15 @@ $( function () {
 
     function initData() {
         $( 'select' ).on( 'change', flipCoins )
+        $( '#submitSize' ).click( () => {
+            if ( $( '#sortSize' ).val() === '' ) {
+                sizeSorter = null
+            }
+            let numSorter = $( '#sortSize' ).val().match( /([^0-9])/gi )
+            if ( !numSorter ) sizeSorter = Number( $( '#sortSize' ).val() )
+
+        } )
+        // $( '.submitPrice' ).click()
     }
 
     function dataPage() {
@@ -157,7 +176,7 @@ $( function () {
         let mainHead = '<div class="container"><div class="row"><div class="col s10"><div id="chart_div" class="card"></div></div><div class="col s2"><div class="row">'
         let settingComponents = ''
         settingComponents = '<div class="card col s12"><label>Currency</label><div class="input-field"><select><option value="ETH">ETH</option><option value="BTC">BTC</option></select></div></div>'
-        settingComponents += '<div class="card col s12"><label>Price</label><div class="input-field"><input placeholder="" id="sortPrice" type="text" class="validate"></div><a id="submitPrice" class="waves-effect waves-light btn">Go</a></div>'
+        // settingComponents += '<div class="card col s12"><label>Price</label><div class="input-field"><input placeholder="" id="sortPrice" type="text" class="validate"></div><a id="submitPrice" class="waves-effect waves-light btn">Go</a></div>'
         settingComponents += '<div class="card col s12"><label>Size</label><div class="input-field"><input placeholder="" id="sortSize" type="text" class="validate"></div><a id="submitSize" class="waves-effect waves-light btn">Go</a></div>'
 
         let mainFoot = '</div></div></div></div>'
