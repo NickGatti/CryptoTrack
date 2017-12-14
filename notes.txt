@@ -14,3 +14,5 @@
 ### Fix cant read property price of undefined - Check
 
 ### Zoom - Next - Crazy Hard too much time
+
+### New Bug cant go back to home page after go to landing from data
