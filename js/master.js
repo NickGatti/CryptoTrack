@@ -189,6 +189,10 @@ $( function () {
         $( '.page-main' ).append( fullHTML )
         $( '#clearStorage' ).css( 'visibility', 'hidden' )
         page.state = 'landingPage'
+        $( '#getStarted' ).click( function ( e ) {
+            e.stopPropagation()
+            setTimeout( dataPage, 500 )
+        } )
     }
 
     function flipCoins() {
@@ -233,17 +237,9 @@ $( function () {
         initData()
         getInfo()
         page.state = 'dataPage'
-    }
-
-    function init() {
-        landingPage()
         $( '#backHome' ).click( function ( e ) {
             e.stopPropagation()
             setTimeout( landingPage, 500 )
-        } )
-        $( '#getStarted' ).click( function ( e ) {
-            e.stopPropagation()
-            setTimeout( dataPage, 500 )
         } )
     }
 
@@ -321,5 +317,5 @@ $( function () {
         $( '#clearStorage' ).css( 'visibility', 'hidden' )
     }
 
-    init()
+    landingPage()
 } );
