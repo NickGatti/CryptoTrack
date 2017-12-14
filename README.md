@@ -10,8 +10,8 @@
 
 ### Price
 
-### Fix presistance bug (data page to home page)
+### Fix persistance bug (data page to home page) - Check
 
 ### Fix cant read property price of undefined - Check
 
-### Zoom - Next
+### Zoom - Next - Crazy Hard too much time
