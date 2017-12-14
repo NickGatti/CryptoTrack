@@ -1,4 +1,4 @@
-#Cryptotrack
+# Cryptotrack
 
 * Idea: A website that uses cryptocurrency market exchange API's to allow people the ability to sort, download and view data
 
@@ -13,20 +13,3 @@
 * What API's will it use: Coinbase's GDAX API, Google Graph API
 
 * What technologies do you plan to use: jQuery, materialize
-
-
-### Landing Page - Check
-
-### BTC / ETH / ETC... - Check
-
-### Local Storage - Fix Eth or Btc - Check
-
-### Quantity
-
-### Price
-
-### Fix persistence bug (data page to home page) - Check
-
-### Fix cant read property price of undefined - Check
-
-### Zoom - Next - Crazy Hard too much time
