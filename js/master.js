@@ -132,12 +132,12 @@ $( function () {
     function drawLineChart() {
         if ( moreRows.length !== 0 ) allRows.push( moreRows )
 
-        var data = new google.visualization.DataTable();
-        data.addColumn( 'number', 'Time in seconds' );
-        data.addColumn( 'number', 'Buys' );
-        data.addColumn( 'number', 'Sells' );
+        var googleData = new google.visualization.DataTable();
+        googleData.addColumn( 'number', 'Time in seconds' );
+        googleData.addColumn( 'number', 'Buys' );
+        googleData.addColumn( 'number', 'Sells' );
 
-        data.addRows( allRows );
+        googleData.addRows( allRows );
 
         var options = {
             chart: {
@@ -148,19 +148,19 @@ $( function () {
 
         var chart = new google.charts.Line( document.getElementById( 'chart_div' ) );
 
-        chart.draw( data, google.charts.Line.convertOptions( options ) );
+        chart.draw( googleData, google.charts.Line.convertOptions( options ) );
     }
 
     function drawScatterChart() {
         if ( moreRows.length !== 0 ) allRows.push( moreRows )
 
-        var data = new google.visualization.DataTable();
-        data.addColumn( 'number', 'Buy Price' );
-        data.addColumn( 'number', 'Sell Price' );
+        var googleData = new google.visualization.DataTable();
+        googleData.addColumn( 'number', 'Prices' );
+        googleData.addColumn( 'number', 'Prices' );
 
         let scatterData = reduceToDualNumber( allRows )
 
-        data.addRows( scatterData );
+        googleData.addRows( scatterData );
 
         var options = {
             chart: {
@@ -177,7 +177,7 @@ $( function () {
 
         var chart = new google.charts.Scatter( document.getElementById( 'chart_div' ) );
 
-        chart.draw( data, google.charts.Scatter.convertOptions( options ) );
+        chart.draw( googleData, google.charts.Scatter.convertOptions( options ) );
     }
 
     function landingPage() {
