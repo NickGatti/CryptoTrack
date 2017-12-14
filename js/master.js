@@ -157,6 +157,9 @@ $( function () {
         let mainHead = '<div class="container"><div class="row"><div class="col s10"><div id="chart_div" class="card"></div></div><div class="col s2"><div class="row">'
         let settingComponents = ''
         settingComponents = '<div class="card col s12"><label>Currency</label><div class="input-field"><select><option value="ETH">ETH</option><option value="BTC">BTC</option></select></div></div>'
+        settingComponents += '<div class="card col s12"><label>Price</label><div class="input-field"><input placeholder="" id="sortPrice" type="text" class="validate"></div><a id="submitPrice" class="waves-effect waves-light btn">Go</a></div>'
+        settingComponents += '<div class="card col s12"><label>Size</label><div class="input-field"><input placeholder="" id="sortSize" type="text" class="validate"></div><a id="submitSize" class="waves-effect waves-light btn">Go</a></div>'
+
         let mainFoot = '</div></div></div></div>'
         let fullHTML = mainHead + settingComponents + mainFoot
         $( '.page-main' ).append( fullHTML )
