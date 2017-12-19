@@ -31,3 +31,5 @@
 ### Full Order Book
 
 ### Download Page Appender CSV
+
+### Change Splash Page INFO
