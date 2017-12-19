@@ -311,11 +311,31 @@ $( function () {
         }
         $( '#clearStorage' ).css( 'visibility', 'visible' )
         $( '#clearStorage' ).click( clearStorage )
+        // $( '#downloadBtn' ).css( 'visibility', 'visible' )
         storageAva = true
     } else {
         $( '#localStorageModal' ).modal( 'open' );
         $( '#clearStorage' ).css( 'visibility', 'hidden' )
+        // $( '#downloadBtn' ).css( 'visibility', 'hidden' )
     }
+
+    // function loadDownload() {
+    //     var storedValue = allRows;
+    //     var linkTag = document.getElementById( 'downloadBtn' );
+    //     var urlInput = allRows
+    //     if ( storedValue ) {
+    //         urlInput.value = storedValue;
+    //         linkTag.href = storedValue;
+    //         linkTag.innerHTML = storedValue;
+    //     }
+    // }
+
+    /*
+
+    To make front end download page:
+    append a new blank webpage to download and use it as the urlInput
+
+    */
 
     landingPage()
 } );
