@@ -133,7 +133,7 @@ $( function () {
         if ( moreRows.length !== 0 ) allRows.push( moreRows )
 
         var googleData = new google.visualization.DataTable();
-        googleData.addColumn( 'number', 'Time in seconds' );
+        googleData.addColumn( 'number', 'Ticks' );
         googleData.addColumn( 'number', 'Buys' );
         googleData.addColumn( 'number', 'Sells' );
 
@@ -141,8 +141,8 @@ $( function () {
 
         var options = {
             chart: {
-                title: `USD Price of ${coin} Over Time`,
-                subtitle: 'updated every two seconds'
+                title: `USD Price of ${coin} Over Running Time`,
+                subtitle: 'Dollars'
             }
         };
 
