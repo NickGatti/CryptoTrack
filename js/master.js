@@ -193,6 +193,7 @@ $( function () {
             e.stopPropagation()
             setTimeout( dataPage, 500 )
         } )
+        $( '#downLoadBtn' ).click( loadDownload )
     }
 
     function flipCoins() {
@@ -311,24 +312,31 @@ $( function () {
         }
         $( '#clearStorage' ).css( 'visibility', 'visible' )
         $( '#clearStorage' ).click( clearStorage )
-        // $( '#downloadBtn' ).css( 'visibility', 'visible' )
+        $( '#downloadBtn' ).css( 'visibility', 'visible' )
         storageAva = true
     } else {
         $( '#localStorageModal' ).modal( 'open' );
         $( '#clearStorage' ).css( 'visibility', 'hidden' )
-        // $( '#downloadBtn' ).css( 'visibility', 'hidden' )
+        $( '#downloadBtn' ).css( 'visibility', 'hidden' )
     }
 
-    // function loadDownload() {
-    //     var storedValue = allRows;
-    //     var linkTag = document.getElementById( 'downloadBtn' );
-    //     var urlInput = allRows
-    //     if ( storedValue ) {
-    //         urlInput.value = storedValue;
-    //         linkTag.href = storedValue;
-    //         linkTag.innerHTML = storedValue;
-    //     }
-    // }
+    function loadDownload() {
+        // var storedValue = allRows;
+        // var linkTag = document.getElementById( 'downloadBtn' );
+        // var urlInput = allRows
+        // if ( storedValue ) {
+        //     urlInput.value = storedValue;
+        //     linkTag.href = storedValue;
+        //     linkTag.innerHTML = storedValue;
+        // }
+        console.log( localStorage.getItem( coin ) )
+        let downloadOutput = ''
+        downloadOutput += '<br><div class="container"><div class="row"><div class="col-12">'
+        downloadOutput += `<p>Copy and paste this data into a file onto your computer:</p></p><p class="dataContainer">${localStorage.getItem(coin).toString()}</p>`
+        downloadOutput += '</div></div></div><br>'
+        $('.page-main').empty().append( downloadOutput )
+        $( '.dataContainer' ).css( 'word-wrap', 'break-word' )
+    }
 
     /*
 
