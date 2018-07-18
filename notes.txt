@@ -1,13 +1,10 @@
-
 ### Landing Page - Check
 
 ### BTC / ETH / ETC... - Check
 
 ### Local Storage - Fix Eth or Btc - Check
 
-### Quantity
-
-### Price
+### Quantity - Check
 
 ### Fix persistence bug (data page to home page) - Check
 
@@ -16,3 +13,23 @@
 ### Zoom - Next - Crazy Hard too much time
 
 ### New Bug cant go back to home page after go to landing from data - Check
+
+### Total Amount
+
+### Times
+
+### Type
+
+### Price
+
+### Ascending order Descending Order
+
+### OrderID Spotter
+
+### WebSocket
+
+### Full Order Book
+
+### Download Page Appender CSV
+
+### Change Splash Page INFO
